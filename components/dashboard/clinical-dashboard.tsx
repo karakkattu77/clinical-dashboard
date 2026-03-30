@@ -111,6 +111,9 @@ export function ClinicalDashboard() {
                 {/* Patient Overview */}
                 <PatientOverview patient={selectedPatient} />
 
+                {/* Physician Note */}
+                <PhysicianNote patient={selectedPatient} />
+
                 {/* Risk Scores */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <RiskCard
@@ -130,9 +133,6 @@ export function ClinicalDashboard() {
                   <AlertsPanel alerts={selectedPatient.alerts} />
                   <VitalsChart vitals={selectedPatient.vitals} />
                 </div>
-
-                {/* Physician Note */}
-                <PhysicianNote patient={selectedPatient} />
 
                 {/* Population View */}
                 <PopulationHistogram
