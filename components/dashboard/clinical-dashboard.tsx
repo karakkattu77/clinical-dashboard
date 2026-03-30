@@ -50,19 +50,27 @@ export function ClinicalDashboard() {
   return (
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
-      <header className="bg-background border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-              <Heart className="h-5 w-5 text-primary-foreground" />
+      <header className="bg-[#041E42] border-b border-[#9E7E38] sticky top-0 z-10 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <img
+                src="/gu-medstar-logo.avif"
+                alt="Georgetown MedStar Logo"
+                className="h-10 w-auto"
+              />
+              <div className="border-l border-[#9E7E38]/50 pl-4">
+                <h1 className="text-lg font-bold text-white leading-tight">
+                  Clinical Risk Monitoring Dashboard
+                </h1>
+                <p className="text-xs text-[#C4A35A]">
+                  ICU Patient Risk Assessment System
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">
-                Clinical Risk Monitoring Dashboard
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                ICU Patient Risk Assessment System
-              </p>
+            <div className="flex items-center gap-2 text-[#C4A35A]">
+              <Heart className="h-4 w-4" />
+              <span className="text-xs font-medium hidden sm:block">MedStar Health</span>
             </div>
           </div>
         </div>
