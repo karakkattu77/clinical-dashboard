@@ -9,6 +9,7 @@ import { AlertsPanel } from "./alerts-panel"
 import { VitalsChart } from "./vitals-chart"
 import { PopulationHistogram } from "./population-histogram"
 import { Activity, Heart } from "lucide-react"
+import { PhysicianNote } from "./physician-note"
 
 export function ClinicalDashboard() {
   const [patients, setPatients] = useState<Patient[]>([])
@@ -129,6 +130,9 @@ export function ClinicalDashboard() {
                   <AlertsPanel alerts={selectedPatient.alerts} />
                   <VitalsChart vitals={selectedPatient.vitals} />
                 </div>
+
+                {/* Physician Note */}
+                <PhysicianNote patient={selectedPatient} />
 
                 {/* Population View */}
                 <PopulationHistogram
