@@ -26,7 +26,7 @@ export function PatientSelector({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+      <label className="text-sm font-medium flex items-center gap-2" style={{ color: "#C4A35A" }}>
         <User className="h-4 w-4" />
         Select Patient
       </label>
@@ -35,21 +35,35 @@ export function PatientSelector({
         placeholder="Search patient ID..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+        style={{
+          background: "rgba(255,255,255,0.08)",
+          border: "1px solid rgba(196,163,90,0.3)",
+          color: "white",
+        }}
       />
-      <div className="flex flex-col gap-1 max-h-64 overflow-y-auto rounded-md border border-input bg-background">
+      <div className="flex flex-col max-h-56 overflow-y-auto rounded-lg" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
         {filtered.length === 0 ? (
-          <p className="px-3 py-2 text-sm text-muted-foreground">No patients found</p>
+          <p className="px-3 py-2 text-sm text-blue-300">No patients found</p>
         ) : (
           filtered.map((patient) => (
             <button
               key={patient.patient_id}
               onClick={() => onSelectPatient(patient.patient_id)}
-              className={`text-left px-3 py-2 text-sm hover:bg-muted transition-colors ${
+              className="text-left px-3 py-2 text-sm transition-colors"
+              style={
                 selectedPatientId === patient.patient_id
-                  ? "bg-primary text-primary-foreground hover:bg-primary"
-                  : ""
-              }`}
+                  ? { background: "#9E7E38", color: "white", fontWeight: 600 }
+                  : { color: "#cbd5e1" }
+              }
+              onMouseEnter={(e) => {
+                if (selectedPatientId !== patient.patient_id)
+                  (e.target as HTMLElement).style.background = "rgba(255,255,255,0.08)"
+              }}
+              onMouseLeave={(e) => {
+                if (selectedPatientId !== patient.patient_id)
+                  (e.target as HTMLElement).style.background = "transparent"
+              }}
             >
               Patient {patient.patient_id}
             </button>
@@ -57,7 +71,7 @@ export function PatientSelector({
         )}
       </div>
       {!query && (
-        <p className="text-xs text-muted-foreground">Showing first 50 — search to filter</p>
+        <p className="text-xs" style={{ color: "rgba(196,163,90,0.7)" }}>Showing first 50 — search to filter</p>
       )}
     </div>
   )

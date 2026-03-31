@@ -48,29 +48,33 @@ export function ClinicalDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #f0f4f8 0%, #e8edf5 100%)" }}>
       {/* Header */}
-      <header className="bg-[#041E42] border-b border-[#9E7E38] sticky top-0 z-10 shadow-md">
+      <header className="sticky top-0 z-10 shadow-lg" style={{ background: "linear-gradient(90deg, #041E42 0%, #0a2d5e 100%)", borderBottom: "3px solid #9E7E38" }}>
         <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img
-                src="/gu-medstar-logo.avif"
-                alt="Georgetown MedStar Logo"
-                className="h-10 w-auto"
-              />
-              <div className="border-l border-[#9E7E38]/50 pl-4">
-                <h1 className="text-lg font-bold text-white leading-tight">
+            <div className="flex items-center gap-5">
+              {/* Logo with white bg removed via multiply blend */}
+              <div className="rounded-lg overflow-hidden" style={{ background: "#041E42" }}>
+                <img
+                  src="/gu-medstar-logo.avif"
+                  alt="Georgetown MedStar Logo"
+                  className="h-11 w-auto block"
+                  style={{ mixBlendMode: "multiply" }}
+                />
+              </div>
+              <div className="border-l pl-5" style={{ borderColor: "#9E7E38" }}>
+                <h1 className="text-base font-bold text-white leading-tight tracking-wide">
                   Clinical Risk Monitoring Dashboard
                 </h1>
-                <p className="text-xs text-[#C4A35A]">
-                  ICU Patient Risk Assessment System
+                <p className="text-xs mt-0.5" style={{ color: "#C4A35A" }}>
+                  ICU Patient Risk Assessment · Georgetown University Medical Center
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-[#C4A35A]">
-              <Heart className="h-4 w-4" />
-              <span className="text-xs font-medium hidden sm:block">MedStar Health</span>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(196,163,90,0.15)", color: "#C4A35A", border: "1px solid rgba(196,163,90,0.3)" }}>
+              <Heart className="h-3.5 w-3.5" />
+              MedStar Health
             </div>
           </div>
         </div>
@@ -78,32 +82,41 @@ export function ClinicalDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-6">
+
           {/* Sidebar */}
           <aside className="lg:w-64 flex-shrink-0">
-            <div className="bg-background rounded-xl border p-4 sticky top-24">
-              <PatientSelector
-                patients={patients}
-                selectedPatientId={selectedPatientId}
-                onSelectPatient={setSelectedPatientId}
-              />
-              <div className="mt-6 pt-6 border-t">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                  Quick Stats
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">Total Patients</span>
-                    <span className="font-semibold">{patients.length}</span>
+            <div className="rounded-2xl overflow-hidden shadow-lg sticky top-24" style={{ background: "#041E42" }}>
+              {/* Sidebar header */}
+              <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(196,163,90,0.25)" }}>
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#C4A35A" }}>Patient Selection</p>
+              </div>
+              <div className="p-4">
+                <PatientSelector
+                  patients={patients}
+                  selectedPatientId={selectedPatientId}
+                  onSelectPatient={setSelectedPatientId}
+                />
+              </div>
+
+              {/* Quick Stats */}
+              <div className="px-4 pb-5" style={{ borderTop: "1px solid rgba(196,163,90,0.15)" }}>
+                <p className="text-xs font-bold uppercase tracking-widest mt-4 mb-3" style={{ color: "#C4A35A" }}>
+                  Census Summary
+                </p>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center py-2 px-3 rounded-lg" style={{ background: "rgba(255,255,255,0.05)" }}>
+                    <span className="text-xs text-blue-200">Total Patients</span>
+                    <span className="text-sm font-bold text-white">{patients.length}</span>
                   </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">High Risk</span>
-                    <span className="font-semibold text-red-600">
+                  <div className="flex justify-between items-center py-2 px-3 rounded-lg" style={{ background: "rgba(239,68,68,0.1)" }}>
+                    <span className="text-xs text-red-300">High Risk</span>
+                    <span className="text-sm font-bold text-red-400">
                       {patients.filter((p) => p.risks.dvt > 70 || p.risks.pressure_injury > 70).length}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-muted-foreground">With Alerts</span>
-                    <span className="font-semibold text-amber-600">
+                  <div className="flex justify-between items-center py-2 px-3 rounded-lg" style={{ background: "rgba(245,158,11,0.1)" }}>
+                    <span className="text-xs text-amber-300">With Alerts</span>
+                    <span className="text-sm font-bold text-amber-400">
                       {patients.filter((p) => p.alerts.length > 0).length}
                     </span>
                   </div>
@@ -113,16 +126,12 @@ export function ClinicalDashboard() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 space-y-6">
+          <main className="flex-1 space-y-5">
             {selectedPatient ? (
               <>
-                {/* Patient Overview */}
                 <PatientOverview patient={selectedPatient} />
-
-                {/* Physician Note */}
                 <PhysicianNote patient={selectedPatient} />
 
-                {/* Risk Scores */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <RiskCard
                     title="DVT / PE Risk"
@@ -136,25 +145,21 @@ export function ClinicalDashboard() {
                   />
                 </div>
 
-                {/* Alerts and Vitals */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                   <AlertsPanel alerts={selectedPatient.alerts} />
                   <VitalsChart vitals={selectedPatient.vitals} />
                 </div>
 
-                {/* Population View */}
                 <PopulationHistogram
                   patients={patients}
                   selectedPatientId={selectedPatientId}
                 />
               </>
             ) : (
-              <div className="bg-background rounded-xl border p-12 text-center">
+              <div className="bg-white rounded-2xl border p-12 text-center shadow-sm">
                 <Activity className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                 <h2 className="text-lg font-semibold mb-2">No Patient Selected</h2>
-                <p className="text-muted-foreground">
-                  Select a patient from the sidebar to view their risk assessment.
-                </p>
+                <p className="text-muted-foreground">Select a patient from the sidebar to view their risk assessment.</p>
               </div>
             )}
           </main>
