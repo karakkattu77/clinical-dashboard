@@ -21,9 +21,16 @@ export function ClinicalDashboard() {
       try {
         const response = await fetch("/frontend_data.json")
         const data = await response.json()
-        setPatients(data)
-        if (data.length > 0) {
-          setSelectedPatientId(data[0].patient_id)
+        // Deduplicate by patient_id, keep first occurrence
+        const seen = new Set()
+        const unique = data.filter((p: Patient) => {
+          if (seen.has(p.patient_id)) return false
+          seen.add(p.patient_id)
+          return true
+        })
+        setPatients(unique)
+        if (unique.length > 0) {
+          setSelectedPatientId(unique[0].patient_id)
         }
       } catch (error) {
         console.error("Failed to load patient data:", error)
@@ -54,12 +61,12 @@ export function ClinicalDashboard() {
         <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
-              {/* Logo with white bg removed via multiply blend */}
-              <div className="rounded-lg overflow-hidden" style={{ background: "#041E42" }}>
+              {/* Logo on gold background */}
+              <div className="rounded-lg overflow-hidden px-3 py-1.5" style={{ background: "#C4A35A" }}>
                 <img
                   src="/gu-medstar-logo.avif"
                   alt="Georgetown MedStar Logo"
-                  className="h-11 w-auto block"
+                  className="h-9 w-auto block"
                   style={{ mixBlendMode: "multiply" }}
                 />
               </div>
